@@ -40,3 +40,4 @@ serverless remove --stage dev
 - [x] Usar junto com uma lambda em Node.js
 - [ ] Testar com serverless-offline
 - [ ] Usar com GraphQL
+- [ ] Criar GitHub Action para fazer deploy automático
