@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "devDependencies": {
+    "serverless": "3.19.0",
+    "serverless-bundle": "5.3.0",
+    "sls-rust": "0.1.1"
+  }
+}

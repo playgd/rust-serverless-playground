@@ -1,0 +1,63 @@
+service: rust-on-aws
+frameworkVersion: '3'
+configValidationMode: error
+
+provider:
+  name: aws
+  memorySize: 128
+  region: us-east-1
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+          Resource: '*'
+
+  environment:
+    ENVIRONMENT: ${opt:stage, 'local'}
+
+package:
+  individually: true
+
+plugins:
+  - sls-rust
+  - serverless-bundle
+
+functions:
+  rust:
+    handler: functions/rust_on_aws.rust_on_aws
+    runtime: provided.al2
+    tags:
+      rust: true
+
+  rust2:
+    handler: functions/rust_on_aws2.rust_on_aws2
+    runtime: provided.al2
+    tags:
+      rust: true
+
+  node:
+    handler: functions/node/index.handler
+    runtime: nodejs16.x
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: rust_on_aws_users_table
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: uid
+            AttributeType: S
+        KeySchema:
+          - AttributeName: uid
+            KeyType: HASH
+
+custom:
+  rust:
+    dockerless: true
+  bundle:
+    linting: false

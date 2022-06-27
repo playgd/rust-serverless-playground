@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "devDependencies": {
+    "aws-sdk": "2.1162.0"
+  }
+}
